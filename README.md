@@ -178,8 +178,8 @@ rewarded_ad_failed_to_show(error)
 If you want to compile the plugin by yourself, it's very easy:
 1. clone this repository;
 2. checkout the desired version;
-3. using command line go to the ```godot-google-admob``` directory;
-4. run ```gradlew build```.
+3. open ```godot-google-admob``` directory in ```Android Studio```
+4. don't forget to put ```godot-lib.release.aar``` to ```godot-lib.release``` directory
 
 If everything goes fine, you'll find the ```.aar``` files at ```godot-google-admob/godotadmob/build/outputs/aar/```.
 
