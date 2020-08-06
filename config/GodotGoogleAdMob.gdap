@@ -1,0 +1,9 @@
+[config]
+
+name="GodotGoogleAdMob"
+binary_type="local"
+binary="GodotGoogleAdMob.1.0.1.release.aar"
+
+[dependencies]
+
+remote=["com.google.android.gms:play-services-ads:19.3.0", "com.google.ads.mediation:unity:3.4.6.1"]
