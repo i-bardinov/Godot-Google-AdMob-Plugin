@@ -38,6 +38,8 @@ export(String, "G", "PG", "T", "MA") var max_ad_content_rate
 
 # "private" properties
 var _admob_singleton = null
+var _interstitial_ad_loaded = false
+var _rewarded_ad_loaded = false
 
 func _enter_tree():
 	if not init():
@@ -103,7 +105,9 @@ func init() -> bool:
 		)
 		return true
 	return false
-	
+
+func is_available() -> bool:
+	return _admob_singleton != null
 # load
 
 func load_banner() -> void:
@@ -115,18 +119,14 @@ func load_interstitial() -> void:
 		_admob_singleton.loadInterstitial(interstitial_id)
 		
 func is_interstitial_loaded() -> bool:
-	if _admob_singleton != null:
-		return _admob_singleton.isInterstitialAdLoaded(interstitial_id)
-	return false
+	return _interstitial_ad_loaded
 		
 func load_rewarded_ad() -> void:
 	if _admob_singleton != null:
 		_admob_singleton.loadRewardedAd(rewarded_id)
 		
 func is_rewarded_ad_loaded() -> bool:
-	if _admob_singleton != null:
-		return _admob_singleton.isRewardedAdLoaded(rewarded_id)
-	return false
+	return _rewarded_ad_loaded
 
 # show / hide
 
@@ -187,12 +187,15 @@ func _on_banner_ad_closed() -> void:
 	emit_signal("banner_ad_closed")
 
 func _on_interstitial_ad_loaded() -> void:
+	_interstitial_ad_loaded = true
 	emit_signal("interstitial_ad_loaded")
 
 func _on_interstitial_ad_failed_to_load(error: String) -> void:
+	_interstitial_ad_loaded = false
 	emit_signal("interstitial_ad_failed_to_load", error)
 
 func _on_interstitial_ad_opened() -> void:
+	_interstitial_ad_loaded = false
 	emit_signal("interstitial_ad_opened")
 
 func _on_interstitial_ad_clicked() -> void:
@@ -202,18 +205,22 @@ func _on_interstitial_ad_left_application() -> void:
 	emit_signal("interstitial_ad_left_application")
 
 func _on_interstitial_ad_closed() -> void:
+	_interstitial_ad_loaded = false
 	emit_signal("interstitial_ad_closed")
 
 func _on_rewarded_ad_loaded() -> void:
+	_rewarded_ad_loaded = true
 	emit_signal("rewarded_ad_loaded")
 
 func _on_rewarded_ad_failed_to_load(error: String) -> void:
 	emit_signal("rewarded_ad_failed_to_load", error)
 	
 func _on_rewarded_ad_opened() -> void:
+	_rewarded_ad_loaded = false
 	emit_signal("rewarded_ad_opened")
 	
 func _on_rewarded_ad_closed() -> void:
+	_rewarded_ad_loaded = false
 	emit_signal("rewarded_ad_closed")
 	
 func _on_rewarded_ad_earned_reward(type: String, amount: int) -> void:
