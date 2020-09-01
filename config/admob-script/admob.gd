@@ -41,7 +41,7 @@ var _admob_singleton = null
 var _interstitial_ad_loaded = false
 var _rewarded_ad_loaded = false
 
-func _enter_tree():
+func _ready():
 	if not init():
 		print("AdMob Java Singleton not found")
 
@@ -71,8 +71,8 @@ func max_ad_content_rate_set(new_val) -> void:
 
 # initialization
 func init() -> bool:
-	if(Engine.has_singleton("GodotAdMob")):
-		_admob_singleton = Engine.get_singleton("GodotAdMob")
+	if(Engine.has_singleton("GodotGoogleAdMob")):
+		_admob_singleton = Engine.get_singleton("GodotGoogleAdMob")
 
 		_admob_singleton.connect("on_initialization_complete", self, "_on_initialization_complete");
 		
