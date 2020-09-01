@@ -27,7 +27,7 @@ signal rewarded_ad_earned_reward(type, amount)
 signal rewarded_ad_failed_to_show(error)
 
 # properties
-export var is_real: bool setget is_real_set
+export var is_real: bool = true
 export var banner_on_top: bool = true
 export var banner_id: String
 export var interstitial_id: String
@@ -44,22 +44,6 @@ var _rewarded_ad_loaded = false
 func _ready():
 	if not init():
 		print("AdMob Java Singleton not found")
-
-# setters
-func is_real_set(new_val) -> void:
-	is_real = new_val
-# warning-ignore:return_value_discarded
-	init()
-	
-func child_directed_set(new_val) -> void:
-	child_directed = new_val
-# warning-ignore:return_value_discarded
-	init()
-
-func is_personalized_set(new_val) -> void:
-	is_personalized = new_val
-# warning-ignore:return_value_discarded
-	init()
 
 func max_ad_content_rate_set(new_val) -> void:
 	if new_val != "G" and new_val != "PG" \
