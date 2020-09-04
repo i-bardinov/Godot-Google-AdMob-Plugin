@@ -130,7 +130,7 @@ public class GodotGoogleAdMob extends GodotPlugin {
      * Init with content rating additional options
      *
      * @param isReal                      Tell if the enviroment is for real or test
-     * @param isForChildDirectedTreatment
+     * @param isForChildDirectedTreatment isForChildDirectedTreatment
      * @param isPersonalized              If ads should be personalized or not.
      *                                    GDPR compliance within the European Economic Area requires that you
      *                                    disable ad personalization if the user does not wish to opt into
@@ -142,7 +142,7 @@ public class GodotGoogleAdMob extends GodotPlugin {
             boolean isForChildDirectedTreatment,
             boolean isPersonalized,
             String maxAdContentRating) {
-        if (maxAdContentRating != null && maxAdContentRating != "") {
+        if (maxAdContentRating != null && !maxAdContentRating.equals("")) {
             extras.putString("max_ad_content_rating", maxAdContentRating);
         }
         if (!isPersonalized) {
@@ -497,9 +497,9 @@ public class GodotGoogleAdMob extends GodotPlugin {
             byte[] messageDigest = digest.digest();
 
             // Create Hex String
-            StringBuffer hexString = new StringBuffer();
-            for (int i = 0; i < messageDigest.length; i++) {
-                String h = Integer.toHexString(0xFF & messageDigest[i]);
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : messageDigest) {
+                String h = Integer.toHexString(0xFF & b);
                 while (h.length() < 2) h = "0" + h;
                 hexString.append(h);
             }
@@ -517,8 +517,7 @@ public class GodotGoogleAdMob extends GodotPlugin {
      */
     private String getAdMobDeviceId() {
         String android_id = Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID);
-        String deviceId = md5(android_id).toUpperCase(Locale.US);
-        return deviceId;
+        return md5(android_id).toUpperCase(Locale.US);
     }
 
 }

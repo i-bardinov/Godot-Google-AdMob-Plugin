@@ -2,7 +2,7 @@
 
 name="GodotGoogleAdMob"
 binary_type="local"
-binary="GodotGoogleAdMob.1.0.1.release.aar"
+binary="GodotGoogleAdMob.1.0.2.release.aar"
 
 [dependencies]
 
